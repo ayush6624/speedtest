@@ -34,6 +34,7 @@ const Result: Schema<Result> = new Schema(
   {
     id: { type: String },
     url: { type: String },
+    image: { type: String },
   },
   { _id: false }
 );

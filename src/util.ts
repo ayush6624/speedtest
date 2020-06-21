@@ -35,6 +35,7 @@ export interface Ping {
 export interface Result {
   id: string;
   url: string;
+  image: string;
 }
 
 export interface Server {
@@ -51,4 +52,7 @@ export const convertToSpeed = (bandwidth: number): string => {
   bandwidth /= 125000;
   const speed: string = bandwidth.toFixed(2).toString() + ' Mbps';
   return speed;
+};
+export const generateImage = (url: string): string => {
+  return (url += '.png');
 };

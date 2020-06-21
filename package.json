@@ -6,14 +6,18 @@
   "author": "ayush6624 <ayushg1214@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev --transpileOnly src/",
+    "dev": "ts-node-dev --transpileOnly src/app.ts",
     "build": "tsc",
-    "start": "node dist/"
+    "start": "node dist/app"
   },
   "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
     "mongoose": "^5.9.19"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.6",
     "@types/mongoose": "^5.7.27",
     "@types/node": "^14.0.13",
     "ts-node-dev": "^1.0.0-pre.49",

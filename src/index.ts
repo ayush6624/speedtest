@@ -1,24 +1,9 @@
 // Divide by 125000 bits -> Mbits
 
 import { Test } from './speed.model';
-import { Data, convertToSpeed } from './util';
+import { Data, convertToSpeed, generateImage } from './util';
 import { mongoose } from './db';
-const exec = require('child_process').exec;
-
-let result: string = '';
-
-const child = exec('./bin/speedtest -f json');
-
-child.stdout.on('data', function (data: any) {
-  result += data;
-});
-
-child.on('close', function () {
-  console.log('closed!!');
-  helperFunction(result).then((success) => {
-    success ? console.log('Done') : console.log('failed!');
-  });
-});
+import util from 'util';
 
 const helperFunction = async (result: any) => {
   const data: Data = JSON.parse(result);
@@ -28,12 +13,22 @@ const helperFunction = async (result: any) => {
   }
   data.download.speed = convertToSpeed(data.download.bandwidth);
   data.upload.speed = convertToSpeed(data.upload.bandwidth);
+  data.result.image = generateImage(data.result.url);
   try {
     const response = await Test.create(data);
     if (response) console.log('Successfull');
+    await mongoose.disconnect();
+    return response;
   } catch (err) {
     console.log('Error => ', err);
+    return { error: err };
   }
-  await mongoose.disconnect();
-  return true;
+};
+
+export const mainTest = async () => {
+  const execFile = util.promisify(require('child_process').execFile);
+  // const child = exec('./bin/speedtest -f json');
+  const { stdout: result } = await execFile('./bin/speedtest', ['-f', 'json']);
+  const ok = await helperFunction(result); // pass from cli!
+  return ok;
 };
