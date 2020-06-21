@@ -25,7 +25,7 @@ const helperFunction = async (result: any) => {
 
 export const mainTest = async () => {
   const execFile = util.promisify(require('child_process').execFile);
-  const { stdout: result } = await execFile('./bin/speedtest', ['-f', 'json']);
+  const { stdout: result } = await execFile('./bin/speedtest', ['--accept-license', '-f', 'json']);
   const ok = await helperFunction(result); // pass from cli!
   return ok;
 };

@@ -8,5 +8,5 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true, dbName:
     console.log('successfully connected to db');
   }
 });
-
+// Handle Disconnection?
 export { mongoose };
