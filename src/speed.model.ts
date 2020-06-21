@@ -1,7 +1,8 @@
-import { Schema, Document } from 'mongoose';
+import { Schema, Document, Model } from 'mongoose';
 import { mongoose } from './db';
-import { Load, Ping, Interface, Result, Server } from './util';
+import { Load, Ping, Interface, Result, Server, Data } from './util';
 
+// Schema
 const Speed: Schema<Load> = new Schema(
   {
     bandwidth: { type: Number },
@@ -65,6 +66,10 @@ const SpeedSchema: Schema = new Schema({
   result: { type: Result },
 });
 
-export interface ITest extends Document {}
+// Types
+export interface ITest extends Data, Document {}
 
+export interface ITestModel extends Model<ITest> {}
+
+// Model
 export const Test = mongoose.model<ITest>('Test', SpeedSchema);
